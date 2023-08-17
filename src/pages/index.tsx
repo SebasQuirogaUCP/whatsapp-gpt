@@ -1,6 +1,6 @@
 import { Chat } from "@/components/Chat";
+import { Contacts } from "@/components/Contacts";
 import { HeaderMiddle } from "@/components/HeaderMiddle";
-import { NavigationBar } from "@/components/NavigationBar";
 import { AppShell, Header, Navbar } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -13,7 +13,7 @@ export default function Home() {
         padding="md"
         navbar={
           <Navbar width={{ base: 300 }} height={height} p="xs">
-            <NavigationBar height={height - 150} width={300} />
+            <Contacts height={height - 150} width={300} />
           </Navbar>
         }
         header={

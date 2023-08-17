@@ -18,7 +18,9 @@ import {
   IconPresentationAnalytics,
 } from "@tabler/icons-react";
 
+import { Err } from "@/services/utils/Err";
 import { LinksGroup } from "./NavBarLinkGroup";
+import { useRandomPeople } from "./hooks/useRandomPeople";
 
 const mockdata = [
   { label: "Dashboard", icon: IconGauge },
@@ -98,11 +100,22 @@ type Props = {
   width: number;
 };
 
-export function NavigationBar({ height, width }: Props) {
+export function Contacts({ height, width }: Props) {
+  const {
+    data: fakeUsers,
+    error: fetchFakeUserError,
+    isLoading,
+  } = useRandomPeople(5);
+
   const { classes } = useStyles();
   const links = mockdata.map((item) => (
     <LinksGroup {...item} key={item.label} />
   ));
+
+  if (fetchFakeUserError) {
+    // TODO: An emergent window for erroring to the user
+    Err(fetchFakeUserError);
+  }
 
   return (
     <>
@@ -121,11 +134,17 @@ export function NavigationBar({ height, width }: Props) {
           </Navbar.Section>
 
           <Navbar.Section className={classes.footer}>
-            <UserButton
-              image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-              name="Ann Nullpointer"
-              email="anullpointer@yahoo.com"
-            />
+            {fakeUsers &&
+              fakeUsers.map((user, i) => {
+                return (
+                  <UserButton
+                    key={i}
+                    image={user.picture.thumbnail}
+                    name={`${user.name.first} ${user.name.last}`}
+                    email={`${user.email}`}
+                  />
+                );
+              })}
           </Navbar.Section>
         </Navbar>
       </Stack>
