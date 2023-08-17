@@ -1,4 +1,4 @@
-export const Fetcher = async <T>(
+export const CustomFetcher = async <T>(
   ...args: Parameters<typeof fetch>
 ): Promise<T> => {
   const response = await fetch(...args);

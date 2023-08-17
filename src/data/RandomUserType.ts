@@ -1,4 +1,4 @@
-type RandomUser = {
+export type RandomUser = {
   gender: string;
   name: {
     title: string;
@@ -34,11 +34,11 @@ type RandomUser = {
     sha256: string;
   };
   dob: {
-    date: Date;
+    date: string;
     age: number;
   };
   registered: {
-    date: Date;
+    date: string;
     age: number;
   };
   phone: string;

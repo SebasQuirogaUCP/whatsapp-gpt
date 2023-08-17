@@ -1,12 +1,13 @@
 import { RandomUserType } from "@/data/RandomUserType";
-import { Fetcher } from "@/services/utils/fetcher";
+import { CustomFetcher } from "@/services/utils/CustomFetcher";
+
 import useSWR from "swr";
 
 export const useRandomPeople = (numOfPeople: number) => {
   // TODO: Instead of reaching directly to ramdonUser it should direct to our backend
   const { data, error, isLoading, mutate } = useSWR<RandomUserType>(
     `https://randomuser.me/api/?results=${numOfPeople}`,
-    Fetcher
+    CustomFetcher
   );
 
   if (error) return { data: null, error, isLoading, mutate };
