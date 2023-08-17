@@ -1,4 +1,6 @@
 # WhatsAppGPT
+Work in Progress
+
 ## NextGen Messaging: Powered by ReactTS, NextJS, Mantine and ChatGPT 🚀 🪐
 
 Welcome to NextGen Messaging, a revolutionary messaging platform that harnesses the power of ReactTS, NextJS, and ChatGPT to deliver an exceptional communication experience. Say goodbye to traditional messaging apps – we're here to redefine the way you connect with others.
