@@ -5,7 +5,6 @@ import {
   UnstyledButton,
   createStyles,
 } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -24,9 +23,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type Props = {
-  picture: string;
-  name: string;
-  message: string;
+  picture: string | undefined;
+  name: string | undefined;
+  message: string | undefined;
 };
 
 export function Chat({ message, name, picture }: Props) {
@@ -46,8 +45,6 @@ export function Chat({ message, name, picture }: Props) {
             {message}
           </Text>
         </div>
-
-        <IconChevronRight size="0.9rem" stroke={1.5} />
       </Group>
     </UnstyledButton>
   );

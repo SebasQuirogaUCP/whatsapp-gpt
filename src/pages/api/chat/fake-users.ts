@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const response = await HttpGet<RandomUser>({
-    uri: `https://randomuser.me/api/?results=5`,
+    uri: `https://randomuser.me/api/?gender=male&results=5`,
   });
 
   if (IsError(response)) {
