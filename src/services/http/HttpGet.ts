@@ -2,7 +2,7 @@ import { Err } from "../utils/Err";
 
 type Props = {
   uri: string | undefined;
-  headers: [string, string][];
+  headers?: [string, string][];
 };
 
 export const HttpGet = async <T>({ uri, headers }: Props) => {
@@ -12,7 +12,7 @@ export const HttpGet = async <T>({ uri, headers }: Props) => {
 
   const response = await fetch(uri, {
     method: "GET",
-    headers: headers,
+    headers: headers?.length === 0 ? [] : headers,
   });
 
   try {

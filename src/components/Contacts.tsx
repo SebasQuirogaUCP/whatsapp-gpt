@@ -8,55 +8,13 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import {
-  IconAdjustments,
-  IconCalendarStats,
-  IconFileAnalytics,
-  IconGauge,
-  IconLock,
-  IconNotes,
-  IconPresentationAnalytics,
-} from "@tabler/icons-react";
 
+import { SetFakeUsers } from "@/services/chat/SetFakeUsers";
 import { Err } from "@/services/utils/Err";
-import { LinksGroup } from "./NavBarLinkGroup";
+import { useAppStore } from "@/store/useAppStore";
+import Router from "next/router";
+import { useEffect } from "react";
 import { useRandomPeople } from "./hooks/useRandomPeople";
-
-const mockdata = [
-  { label: "Dashboard", icon: IconGauge },
-  {
-    label: "Market news",
-    icon: IconNotes,
-    initiallyOpened: true,
-    links: [
-      { label: "Overview", link: "/" },
-      { label: "Forecasts", link: "/" },
-      { label: "Outlook", link: "/" },
-      { label: "Real time", link: "/" },
-    ],
-  },
-  {
-    label: "Releases",
-    icon: IconCalendarStats,
-    links: [
-      { label: "Upcoming releases", link: "/" },
-      { label: "Previous releases", link: "/" },
-      { label: "Releases schedule", link: "/" },
-    ],
-  },
-  { label: "Analytics", icon: IconPresentationAnalytics },
-  { label: "Contracts", icon: IconFileAnalytics },
-  { label: "Settings", icon: IconAdjustments },
-  {
-    label: "Security",
-    icon: IconLock,
-    links: [
-      { label: "Enable 2FA", link: "/" },
-      { label: "Change password", link: "/" },
-      { label: "Recovery codes", link: "/" },
-    ],
-  },
-];
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -102,15 +60,19 @@ type Props = {
 
 export function Contacts({ height, width }: Props) {
   const {
-    data: fakeUsers,
+    data: fakeUsersRetrieved,
     error: fetchFakeUserError,
     isLoading,
-  } = useRandomPeople(5);
+  } = useRandomPeople();
+
+  const fakeUsers = useAppStore((s) => s.fakeUsers);
+
+  useEffect(() => {
+    if (fakeUsersRetrieved && fakeUsersRetrieved?.length !== fakeUsers.length)
+      SetFakeUsers(fakeUsersRetrieved);
+  }, [fakeUsers.length, fakeUsersRetrieved]);
 
   const { classes } = useStyles();
-  const links = mockdata.map((item) => (
-    <LinksGroup {...item} key={item.label} />
-  ));
 
   if (fetchFakeUserError) {
     // TODO: An emergent window for erroring to the user
@@ -142,6 +104,7 @@ export function Contacts({ height, width }: Props) {
                     image={user.picture.thumbnail}
                     name={`${user.name.first} ${user.name.last}`}
                     email={`${user.email}`}
+                    onClick={() => Router.push(`/chat/${user.email}`)}
                   />
                 );
               })}

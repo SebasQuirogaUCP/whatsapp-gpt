@@ -3,36 +3,38 @@ import {
   Group,
   Text,
   UnstyledButton,
-  UnstyledButtonProps,
   createStyles,
-} from '@mantine/core';
-import { IconChevronRight } from '@tabler/icons-react';
+} from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   user: {
-    display: 'block',
-    width: '100%',
+    display: "block",
+    width: "100%",
     padding: theme.spacing.md,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
 
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[8]
+          : theme.colors.gray[0],
     },
   },
 }));
 
-interface UserButtonProps extends UnstyledButtonProps {
+type UserButtonProps = {
   image: string;
   name: string;
   email: string;
-  icon?: React.ReactNode;
-}
+  onClick: () => void;
+};
 
-export function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
+export function UserButton({ image, name, email, onClick }: UserButtonProps) {
   const { classes } = useStyles();
 
   return (
-    <UnstyledButton className={classes.user} {...others}>
+    <UnstyledButton className={classes.user} onClick={onClick}>
       <Group>
         <Avatar src={image} radius="xl" />
 
@@ -46,7 +48,7 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
           </Text>
         </div>
 
-        {icon || <IconChevronRight size="0.9rem" stroke={1.5} />}
+        <IconChevronRight size="0.9rem" stroke={1.5} />
       </Group>
     </UnstyledButton>
   );

@@ -1,38 +1,54 @@
-import { RandomUser } from "@/data/RandomUserType";
-import { Avatar, Group, Text, createStyles, rem } from "@mantine/core";
-import Router from "next/router";
+import {
+  Avatar,
+  Group,
+  Text,
+  UnstyledButton,
+  createStyles,
+} from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
-  body: {
-    paddingLeft: rem(54),
-    paddingTop: theme.spacing.sm,
+  user: {
+    display: "block",
+    width: "100%",
+    padding: theme.spacing.md,
+    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[8]
+          : theme.colors.gray[0],
+    },
   },
 }));
 
 type Props = {
-  user: Partial<RandomUser>;
+  picture: string;
+  name: string;
+  message: string;
 };
 
-export const Chat = ({ user }: Props) => {
+export function Chat({ message, name, picture }: Props) {
   const { classes } = useStyles();
+
   return (
-    <div>
-      <Group onClick={() => Router.push("/chat")}>
-        <Avatar
-          src={user.picture?.thumbnail}
-          alt={user.name?.first}
-          radius="xl"
-        />
-        <div>
-          <Text size="sm">{user.name?.first}</Text>
-          {/* <Text size="xs" color="dimmed">
-            {user.dob.date}
-          </Text> */}
+    <UnstyledButton className={classes.user}>
+      <Group>
+        <Avatar src={picture} radius="xl" />
+
+        <div style={{ flex: 1 }}>
+          <Text size="sm" weight={500}>
+            {name}
+          </Text>
+
+          <Text color="dimmed" size="xs">
+            {message}
+          </Text>
         </div>
+
+        <IconChevronRight size="0.9rem" stroke={1.5} />
       </Group>
-      <Text className={classes.body} size="sm">
-        {/* {body} */}
-      </Text>
-    </div>
+    </UnstyledButton>
   );
-};
+}

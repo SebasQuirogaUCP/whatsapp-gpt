@@ -3,14 +3,14 @@ import { CustomFetcher } from "@/services/utils/CustomFetcher";
 
 import useSWR from "swr";
 
-export const useRandomPeople = (numOfPeople: number) => {
-  // TODO: Instead of reaching directly to ramdonUser it should direct to our backend
+export const useRandomPeople = () => {
   const { data, error, isLoading, mutate } = useSWR<RandomUserType>(
-    `https://randomuser.me/api/?results=${numOfPeople}`,
+    `/api/chat/fake-users`,
     CustomFetcher
   );
 
   if (error) return { data: null, error, isLoading, mutate };
+
 
   return { data: data?.results, error, isLoading, mutate };
 };
